@@ -11,15 +11,27 @@ import java.util.*;
  * Time: 1:41 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DistributedLog {
-    static String[] addresses = {"127.0.0.1","192.168.1.102"};
+public class DistributedLog implements Runnable{
+    //static String[] addresses = {"127.0.0.1","192.168.1.102"};
     final static int port = 9999;
     final static long checkInterval = 10000;
-    public static void main(String[] args) throws Exception{
-         frequent(2);
+    //public static void main(String[] args) throws Exception{
+    //     frequent(2);
+    //}
+    int pattern; //0:infrequent 1:frequent
+    DistributedLog(int pattern){
+
     }
-    public static void infrequent(int pattern) throws Exception{
-        Thread serverThread = new Thread(new LogServer(port, pattern));
+    public void run(){
+        try{
+        if(pattern==0) infrequent();
+        else frequent();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void infrequent() throws Exception{
+        Thread serverThread = new Thread(new LogServer(port, 0));
         serverThread.start();
         System.out.println("Log server started");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -29,11 +41,11 @@ public class DistributedLog {
             System.out.println("Enter your command: \n");
             cmd = br.readLine();
 
-            for(String address: addresses){
+            for(String address: Config.ipAddresses){
                 new Thread(new LogClient(address, port, cmd, msgQueue)).start();
 
             }
-            while(msgQueue.size() < addresses.length){
+            while(msgQueue.size() < Config.ipAddresses.length){
                 Thread.sleep(100);
             }
             for(String s: msgQueue){
@@ -42,17 +54,18 @@ public class DistributedLog {
             msgQueue.clear();
         }
     }
-    public static void frequent(int pattern) throws Exception{
-        Thread serverThread = new Thread(new LogServer(port, pattern));
+    public void frequent() throws Exception{
+        Thread serverThread = new Thread(new LogServer(port, 1));
         serverThread.start();
         System.out.println("Log server started");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String cmd;
         List<String> msgQueue = Collections.synchronizedList(new LinkedList<String>());;
+
         Message msg = new Message("");
         HashMap<String, Thread> threadMap = new HashMap<String, Thread>();
         long lastCheckTime = System.currentTimeMillis();
-        for(String address: addresses){
+        for(String address: Config.ipAddresses){
             Thread newThread = new Thread(new LogClient2(address, port,"", msgQueue, msg));
             threadMap.put(address, newThread);
             newThread.start();
@@ -62,7 +75,7 @@ public class DistributedLog {
         while(true){
             if(System.currentTimeMillis() - lastCheckTime > checkInterval){
                 lastCheckTime = System.currentTimeMillis();
-                for(String address: addresses){
+                for(String address: Config.ipAddresses){
                     if(!threadMap.get(address).isAlive())
                         threadMap.get(address).start();
                 }
@@ -73,7 +86,7 @@ public class DistributedLog {
             synchronized (msg){
                 msg.notifyAll();
             }
-            while(msgQueue.size() < addresses.length){
+            while(msgQueue.size() < Config.ipAddresses.length){
                 Thread.sleep(100);
             }
             for(String s: msgQueue){

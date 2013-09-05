@@ -29,7 +29,10 @@ public class InputHandler2 extends InputHandler {
                     cmdBuider.append(nextline);
                 else{
                     System.out.format("InputHandler2: new request from:%s\n",this.socket.getRemoteSocketAddress().toString());
-                    out.println(runCmd(cmdBuider.toString()));
+                    String cmdResult = this.socket.getRemoteSocketAddress().toString().substring(1);
+                    cmdResult += runCmd(cmdBuider.toString());
+
+                    out.println(cmdResult);
                     out.println("MSG_END");
                     cmdBuider = new StringBuilder();
 

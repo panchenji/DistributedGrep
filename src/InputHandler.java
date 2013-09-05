@@ -27,7 +27,11 @@ public class InputHandler implements Runnable {
 
 
             //out.println("Get command. Thanks");
-            out.println(runCmd(cmdBuider.toString()));
+            String cmdResult = this.socket.getRemoteSocketAddress().toString().substring(1);
+            cmdResult += runCmd(cmdBuider.toString());
+
+            out.println(cmdResult);
+
             out.println("MSG_END");
             while ((nextline = in.readLine())!=null) {
 
@@ -41,9 +45,9 @@ public class InputHandler implements Runnable {
             e.printStackTrace();
          }
     }
-    protected String runCmd(String cmd) throws IOException{
+    protected static String runCmd(String cmd) throws IOException{
         StringBuilder re = new StringBuilder();
-        re.append(this.socket.getRemoteSocketAddress().toString().substring(1));
+        //re.append(this.socket.getRemoteSocketAddress().toString().substring(1));
         re.append(":\n");
         Runtime rt = Runtime.getRuntime();
         Process proc = rt.exec(cmd);
