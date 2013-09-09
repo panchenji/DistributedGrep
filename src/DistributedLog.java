@@ -45,7 +45,13 @@ public class DistributedLog implements Runnable{
                 new Thread(new LogClient(address, Config.port, msg , msgQueue,Config.machineNumMap.get(address))).start();
 
             }
-            while(msgQueue.size() < msg.commSets.size()){
+            int threshold;
+            System.out.println(msg.commSets.size());
+            if(msg.commSets.size()==0) threshold = Config.ipAddresses.length;
+            else threshold = msg.commSets.size();
+            while(msgQueue.size() < threshold){
+                System.out.println(msg.commSets.size());
+                System.out.println(msgQueue.size());
                 Thread.sleep(100);
             }
             for(String s: msgQueue){
@@ -92,7 +98,11 @@ public class DistributedLog implements Runnable{
             synchronized (msg){
                 msg.notifyAll();
             }
-            while(msgQueue.size() < msg.commSets.size()){
+            int threshold;
+            System.out.println(msg.commSets.size());
+            if(msg.commSets.size()==0) threshold = Config.ipAddresses.length;
+            else threshold = msg.commSets.size();
+            while(msgQueue.size() < threshold){
                 Thread.sleep(100);
             }
             for(String s: msgQueue){
