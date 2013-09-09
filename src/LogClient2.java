@@ -15,9 +15,9 @@ import java.util.concurrent.Semaphore;
  */
 public class LogClient2 extends LogClient {
     Message msg;
-    LogClient2(String address, int port, String cmd, List<String> msgQueue, Message msg){
-        super(address, port, cmd, msgQueue);
-        this.msg = msg;
+    LogClient2(String address, int port, List<String> msgQueue, Message msg, int num){
+        super(address, port, msg, msgQueue, num);
+        //this.msg = msg;
     }
     @Override
     public void run(){
@@ -31,6 +31,9 @@ public class LogClient2 extends LogClient {
             while(s.isConnected()){
                 synchronized (msg){
                 msg.wait();
+                //System.out.println(this.machineNum);
+                //System.out.println(msg.getContent());
+                if(!msg.inSet(this.machineNum)) continue;
                 this.out.println(msg.getContent());
                 this.out.println("MSG_END");
                 msgResult = new StringBuilder();
@@ -49,7 +52,7 @@ public class LogClient2 extends LogClient {
             this.s.close();
 
         }catch (Exception e){
-
+            this.msgQueue.add(address+": DISCONNECTED ERROR" );
             e.printStackTrace();
         }
     }

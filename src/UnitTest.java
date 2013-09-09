@@ -12,7 +12,8 @@ import java.net.InetAddress;
 
 class Test{
     public static void main(String[] args){
-
+        UnitTest u = new UnitTest();
+        u.simpleTest();
     }
 }
 public class UnitTest {
@@ -28,10 +29,10 @@ public class UnitTest {
             if((localAddress==Config.ipAddresses[0])){
                 log = new DistributedLog(1);
             }
-            if((addr.getHostAddress()==Config.ipAddresses[1])){
+            if((addr.getHostAddress()==Config.ipAddresses[0])){
                 DistributedLog machine = new DistributedLog(1);
             }
-            if((addr.getHostAddress()==Config.ipAddresses[2])){
+            if((addr.getHostAddress()==Config.ipAddresses[1])){
                 log = new DistributedLog(1);
 
             }
@@ -45,7 +46,7 @@ public class UnitTest {
     public boolean testGrepResult(){
 
             setup();
-            ByteArrayInputStream in = new ByteArrayInputStream("grep xxxxx".getBytes());
+            ByteArrayInputStream in = new ByteArrayInputStream("key=key1".getBytes());
             System.setIn(in);
 
 
@@ -59,5 +60,10 @@ public class UnitTest {
 
         return true;
 
+    }
+    public void simpleTest(){
+        log = new DistributedLog(1);
+        logThread = new Thread(log);
+        logThread.start();
     }
 }

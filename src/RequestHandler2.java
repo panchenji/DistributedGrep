@@ -11,8 +11,8 @@ import java.net.Socket;
  * Time: 5:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class InputHandler2 extends InputHandler {
-    InputHandler2(Socket s){
+public class RequestHandler2 extends RequestHandler {
+    RequestHandler2(Socket s){
         super(s);
 
     }
@@ -30,6 +30,7 @@ public class InputHandler2 extends InputHandler {
                 else{
                     System.out.format("InputHandler2: new request from:%s\n",this.socket.getRemoteSocketAddress().toString());
                     String cmdResult = this.socket.getRemoteSocketAddress().toString().substring(1);
+                    //System.out.println("command:"+cmdBuider.toString());
                     cmdResult += runCmd(cmdBuider.toString());
 
                     out.println(cmdResult);

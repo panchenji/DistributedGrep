@@ -8,9 +8,9 @@ import java.net.Socket;
  * Time: 2:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public class InputHandler implements Runnable {
+public class RequestHandler implements Runnable {
     Socket socket;
-    InputHandler(Socket s){
+    RequestHandler(Socket s){
         this.socket = s;
     }
     public void run(){
@@ -49,6 +49,7 @@ public class InputHandler implements Runnable {
         StringBuilder re = new StringBuilder();
         //re.append(this.socket.getRemoteSocketAddress().toString().substring(1));
         re.append(":\n");
+        cmd = "grep "+cmd+" log.log";
         Runtime rt = Runtime.getRuntime();
         Process proc = rt.exec(cmd);
         BufferedReader stdInput = new BufferedReader(new

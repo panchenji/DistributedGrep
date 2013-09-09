@@ -31,9 +31,9 @@ public class LogServer implements Runnable{
             System.out.format("Connect to %s\n", socket.getRemoteSocketAddress().toString());
 
                if(pattern == 0)
-                   new Thread(new InputHandler(socket)).start();
+                   new Thread(new RequestHandler(socket)).start();
                else
-                   new Thread(new InputHandler2(socket)).start();
+                   new Thread(new RequestHandler2(socket)).start();
             }
        }catch(Exception e){
            System.err.format("LogServer: Fail to connect to:%s\n",socket.getRemoteSocketAddress().toString());

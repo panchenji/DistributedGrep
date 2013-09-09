@@ -13,14 +13,13 @@ import java.util.*;
  */
 public class DistributedLog implements Runnable{
     //static String[] addresses = {"127.0.0.1","192.168.1.102"};
-    final static int port = 9999;
-    final static long checkInterval = 10000;
+
     //public static void main(String[] args) throws Exception{
     //     frequent(2);
     //}
     int pattern; //0:infrequent 1:frequent
     DistributedLog(int pattern){
-
+       this.pattern = pattern;
     }
     public void run(){
         try{
@@ -31,7 +30,7 @@ public class DistributedLog implements Runnable{
         }
     }
     public void infrequent() throws Exception{
-        Thread serverThread = new Thread(new LogServer(port, 0));
+        Thread serverThread = new Thread(new LogServer(Config.port, 0));
         serverThread.start();
         System.out.println("Log server started");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -40,12 +39,13 @@ public class DistributedLog implements Runnable{
         while(true){
             System.out.println("Enter your command: \n");
             cmd = br.readLine();
-
+            Message msg = new Message("");
+            MSGHandler.updateMSG(cmd,msg);
             for(String address: Config.ipAddresses){
-                new Thread(new LogClient(address, port, cmd, msgQueue)).start();
+                new Thread(new LogClient(address, Config.port, msg , msgQueue,Config.machineNumMap.get(address))).start();
 
             }
-            while(msgQueue.size() < Config.ipAddresses.length){
+            while(msgQueue.size() < msg.commSets.size()){
                 Thread.sleep(100);
             }
             for(String s: msgQueue){
@@ -55,7 +55,7 @@ public class DistributedLog implements Runnable{
         }
     }
     public void frequent() throws Exception{
-        Thread serverThread = new Thread(new LogServer(port, 1));
+        Thread serverThread = new Thread(new LogServer(Config.port, 1));
         serverThread.start();
         System.out.println("Log server started");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -66,33 +66,40 @@ public class DistributedLog implements Runnable{
         HashMap<String, Thread> threadMap = new HashMap<String, Thread>();
         long lastCheckTime = System.currentTimeMillis();
         for(String address: Config.ipAddresses){
-            Thread newThread = new Thread(new LogClient2(address, port,"", msgQueue, msg));
+            Thread newThread = new Thread(new LogClient2(address, Config.port, msgQueue, msg, Config.machineNumMap.get(address)));
             threadMap.put(address, newThread);
             newThread.start();
 
         }
 
         while(true){
-            if(System.currentTimeMillis() - lastCheckTime > checkInterval){
+            if(System.currentTimeMillis() - lastCheckTime > Config.checkInterval){
                 lastCheckTime = System.currentTimeMillis();
                 for(String address: Config.ipAddresses){
                     if(!threadMap.get(address).isAlive())
                         threadMap.get(address).start();
                 }
             }
-            System.out.println("Enter your command: \n");
+            System.out.println("Enter your command:");
             cmd = br.readLine();
-            msg.setContent(cmd);
+            //msg.setContent(cmd);
+            MSGHandler.updateMSG(cmd, msg);
+            //System.out.println(msg.valid);
+            if(!msg.valid) {
+                System.out.println("Invalid input");
+                continue;
+            }
             synchronized (msg){
                 msg.notifyAll();
             }
-            while(msgQueue.size() < Config.ipAddresses.length){
+            while(msgQueue.size() < msg.commSets.size()){
                 Thread.sleep(100);
             }
             for(String s: msgQueue){
                 System.out.print(s);
             }
             msgQueue.clear();
+            msg.clear();
 
         }
     }

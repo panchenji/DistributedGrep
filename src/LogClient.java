@@ -16,26 +16,29 @@ public class LogClient implements Runnable {
     Socket s;
     BufferedReader in;
     PrintWriter out;
-    String cmd;
+    Message msg;
     List<String> msgQueue;
     String address;
+    int machineNum;
     int port;
-    LogClient(String address, int port, String cmd, List<String> msgQueue){
+    LogClient(String address, int port, Message msg, List<String> msgQueue, int num){
         this.address = address;
         this.msgQueue = msgQueue;
-        this.cmd = cmd;
+        this.msg = msg;
         this.port = port;
+        this.machineNum = num;
         System.out.format("Create LogClient to address:%s:%d\n",address,port);
 
     }
     public void run(){
         try{
+            if(msg.inSet(this.machineNum)){
             this.s = new Socket(address, port);
             this.in =
                     new BufferedReader(new InputStreamReader(s.getInputStream()));
             this.out = new PrintWriter(s.getOutputStream(), true);
 
-            this.out.println(cmd);
+            this.out.println(msg.getContent());
             this.out.println("MSG_END");
             String nextline;
             StringBuilder msgResult = new StringBuilder();
@@ -48,6 +51,7 @@ public class LogClient implements Runnable {
             this.in.close();
             this.s.close();
             this.msgQueue.add(msgResult.toString());
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
