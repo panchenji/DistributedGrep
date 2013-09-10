@@ -73,7 +73,7 @@ public class DistributedLog implements Runnable{
         HashMap<String, Thread> threadMap = new HashMap<String, Thread>();
         long lastCheckTime = System.currentTimeMillis();
 
-        System.out.println("Enter your command:");
+        System.out.println("Enter press if all the machines are set");
         cmd = br.readLine();
         for(String address: Config.ipAddresses){
             Thread newThread = new Thread(new LogClient2(address, Config.port, msgQueue, msg, Config.machineNumMap.get(address)));
@@ -83,7 +83,8 @@ public class DistributedLog implements Runnable{
         }
         while(true){
 
-
+            System.out.println("Enter your command:");
+            cmd = br.readLine();
             //msg.setContent(cmd);
             MSGHandler.updateMSG(cmd, msg);
             //System.out.println(msg.valid);
@@ -102,7 +103,7 @@ public class DistributedLog implements Runnable{
                 msg.notifyAll();
             }
             int threshold;
-            System.out.println(msg.commSets.size());
+            //System.out.println(msg.commSets.size());
             if(msg.commSets.size()==0) threshold = Config.ipAddresses.length;
             else threshold = msg.commSets.size();
             while(msgQueue.size() < threshold){
@@ -113,8 +114,6 @@ public class DistributedLog implements Runnable{
             }
             msgQueue.clear();
             msg.clear();
-            System.out.println("Enter your command:");
-            cmd = br.readLine();
 
         }
     }

@@ -1,10 +1,8 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,6 +52,7 @@ public class LogClient2 extends LogClient {
         }catch (Exception e){
             this.msgQueue.add(address+": DISCONNECTED ERROR" );
             e.printStackTrace();
+            return;
         }
     }
 }

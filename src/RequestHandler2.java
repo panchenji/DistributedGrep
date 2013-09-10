@@ -30,7 +30,7 @@ public class RequestHandler2 extends RequestHandler {
                 else{
                     System.out.format("InputHandler2: new request from:%s\n",this.socket.getRemoteSocketAddress().toString());
                     String cmdResult = this.socket.getRemoteSocketAddress().toString().substring(1);
-                    //System.out.println("command:"+cmdBuider.toString());
+                    System.out.println("command:"+cmdBuider.toString());
                     cmdResult += runCmd(cmdBuider.toString());
 
                     out.println(cmdResult);

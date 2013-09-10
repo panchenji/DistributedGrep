@@ -54,6 +54,7 @@ public class LogClient implements Runnable {
             }
         }catch (IOException e){
             e.printStackTrace();
+            return;
         }
 
     }
