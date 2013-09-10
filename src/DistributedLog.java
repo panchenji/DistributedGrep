@@ -47,12 +47,12 @@ public class DistributedLog implements Runnable{
 
             }
             int threshold;
-            System.out.println(msg.commSets.size());
+            //System.out.println(msg.commSets.size());
             if(msg.commSets.size()==0) threshold = Config.ipAddresses.length;
             else threshold = msg.commSets.size();
             while(msgQueue.size() < threshold){
-                System.out.println(msg.commSets.size());
-                System.out.println(msgQueue.size());
+                //System.out.println(msg.commSets.size());
+                //System.out.println(msgQueue.size());
                 Thread.sleep(100);
             }
             for(String s: msgQueue){
@@ -72,17 +72,18 @@ public class DistributedLog implements Runnable{
         Message msg = new Message("");
         HashMap<String, Thread> threadMap = new HashMap<String, Thread>();
         long lastCheckTime = System.currentTimeMillis();
+
+        System.out.println("Enter your command:");
+        cmd = br.readLine();
         for(String address: Config.ipAddresses){
             Thread newThread = new Thread(new LogClient2(address, Config.port, msgQueue, msg, Config.machineNumMap.get(address)));
             threadMap.put(address, newThread);
             newThread.start();
 
         }
-
         while(true){
 
-            System.out.println("Enter your command:");
-            cmd = br.readLine();
+
             //msg.setContent(cmd);
             MSGHandler.updateMSG(cmd, msg);
             //System.out.println(msg.valid);
@@ -112,6 +113,8 @@ public class DistributedLog implements Runnable{
             }
             msgQueue.clear();
             msg.clear();
+            System.out.println("Enter your command:");
+            cmd = br.readLine();
 
         }
     }
