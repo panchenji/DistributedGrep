@@ -70,7 +70,7 @@
       <file leaf-file-name="RequestHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RequestHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="13" selection-start="213" selection-end="213" vertical-scroll-proportion="0.0">
+            <state line="65" column="14" selection-start="2274" selection-end="2274" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -97,7 +97,7 @@
       <file leaf-file-name="DistributedLog.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DistributedLog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="8" selection-start="2805" selection-end="2805" vertical-scroll-proportion="0.42307693">
+            <state line="95" column="55" selection-start="3790" selection-end="3790" vertical-scroll-proportion="0.42307693">
               <folding />
             </state>
           </provider>
@@ -106,7 +106,7 @@
       <file leaf-file-name="LogClient2.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LogClient2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="18" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.0">
+            <state line="37" column="17" selection-start="1298" selection-end="1298" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -172,6 +172,7 @@
         <option value="$PROJECT_DIR$/LogClient2.java" />
         <option value="$PROJECT_DIR$/LogClient.java" />
         <option value="$PROJECT_DIR$/RequestHandler2.java" />
+        <option value="$PROJECT_DIR$/RequestHandler.java" />
         <option value="$PROJECT_DIR$/DistributedLog.java" />
       </list>
     </option>
@@ -535,11 +536,6 @@
         <state line="38" column="22" selection-start="894" selection-end="894" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RequestHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="13" selection-start="213" selection-end="213" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="49" column="30" selection-start="1319" selection-end="1336" vertical-scroll-proportion="0.0">
@@ -550,13 +546,6 @@
     <entry file="file://$PROJECT_DIR$/MSGHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="21" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LogClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="19" selection-start="1788" selection-end="1788" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -577,13 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LogClient2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="18" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LogServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="36" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" />
@@ -596,9 +578,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/LogClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="19" selection-start="1788" selection-end="1788" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RequestHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="14" selection-start="2274" selection-end="2274" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LogClient2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="17" selection-start="1298" selection-end="1298" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DistributedLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="8" selection-start="2805" selection-end="2805" vertical-scroll-proportion="0.42307693">
+        <state line="95" column="55" selection-start="3790" selection-end="3790" vertical-scroll-proportion="0.42307693">
           <folding />
         </state>
       </provider>

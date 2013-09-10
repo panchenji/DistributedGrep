@@ -59,11 +59,11 @@ public class RequestHandler implements Runnable {
         String s;
         while ((s = stdInput.readLine()) != null) {
             re.append(s);
-            re.append("\n");
+            //re.append("\n");
         }
         while ((s = stdError.readLine()) != null) {
             re.append(s);
-            re.append("\n");
+            //re.append("\n");
         }
         return re.toString();
 

@@ -92,6 +92,7 @@ public class DistributedLog implements Runnable{
                 lastCheckTime = System.currentTimeMillis();
                 for(String address: Config.ipAddresses){
                     if(!threadMap.get(address).isAlive())
+                        threadMap.put(address, new Thread(new LogClient2(address, Config.port, msgQueue, msg, Config.machineNumMap.get(address))));
                         threadMap.get(address).start();
                 }
             }
