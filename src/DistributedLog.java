@@ -1,8 +1,9 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Socket;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -79,6 +80,12 @@ public class DistributedLog implements Runnable{
         }
 
         while(true){
+
+            System.out.println("Enter your command:");
+            cmd = br.readLine();
+            //msg.setContent(cmd);
+            MSGHandler.updateMSG(cmd, msg);
+            //System.out.println(msg.valid);
             if(System.currentTimeMillis() - lastCheckTime > Config.checkInterval){
                 lastCheckTime = System.currentTimeMillis();
                 for(String address: Config.ipAddresses){
@@ -86,11 +93,6 @@ public class DistributedLog implements Runnable{
                         threadMap.get(address).start();
                 }
             }
-            System.out.println("Enter your command:");
-            cmd = br.readLine();
-            //msg.setContent(cmd);
-            MSGHandler.updateMSG(cmd, msg);
-            //System.out.println(msg.valid);
             if(!msg.valid) {
                 System.out.println("Invalid input");
                 continue;
