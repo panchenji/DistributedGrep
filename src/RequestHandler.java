@@ -41,7 +41,7 @@ public class RequestHandler implements Runnable {
             in.close();
             socket.close();
          }catch(IOException e){
-            System.out.println("InputHandler: run() fails");
+            System.out.println("RequestHandler: run() fails");
             e.printStackTrace();
          }
     }

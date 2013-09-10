@@ -28,7 +28,7 @@ public class RequestHandler2 extends RequestHandler {
                 if(!nextline.equals("MSG_END"))
                     cmdBuider.append(nextline);
                 else{
-                    System.out.format("InputHandler2: new request from:%s\n",this.socket.getRemoteSocketAddress().toString());
+                    System.out.format("RequestHandler2: new request from:%s\n",this.socket.getRemoteSocketAddress().toString());
                     String cmdResult = this.socket.getRemoteSocketAddress().toString().substring(1);
                     System.out.println("command:"+cmdBuider.toString());
                     cmdResult += runCmd(cmdBuider.toString());
@@ -40,12 +40,12 @@ public class RequestHandler2 extends RequestHandler {
                 }
 
             }
-            System.err.format("InputHandler2: Remote %s Disconnected",this.socket.getRemoteSocketAddress());
+            System.err.format("RequestHandler2: Remote %s Disconnected\n",this.socket.getRemoteSocketAddress());
             out.close();
             in.close();
             socket.close();
         }catch(IOException e){
-            System.out.println("InputHandler: run() fails");
+            System.out.println("RequestHandler: run() fails");
             e.printStackTrace();
         }
     }

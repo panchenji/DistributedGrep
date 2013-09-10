@@ -44,13 +44,13 @@ public class LogClient2 extends LogClient {
                 msgResult = new StringBuilder();
                 }
             }
-            System.err.format("LogClient2: Remote Server: %s Diconnected",this.s.getRemoteSocketAddress());
+            System.err.format("LogClient2: Remote Server: %s Diconnected\n",this.s.getRemoteSocketAddress());
             this.out.close();
             this.in.close();
             this.s.close();
 
         }catch (Exception e){
-            this.msgQueue.add(address+": DISCONNECTED ERROR" );
+            this.msgQueue.add(address+": DISCONNECTED ERROR\n" );
             e.printStackTrace();
             return;
         }

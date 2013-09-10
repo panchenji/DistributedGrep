@@ -28,7 +28,8 @@ public class DistributedLogTest {
         t.start();
         ByteArrayInputStream in = new ByteArrayInputStream("key=key1;machine=0;".getBytes());
         System.setIn(in);
-        assertEquals("", outContent.toString());
+        boolean cap = outContent.toString().indexOf("key1:value1") > 0;
+        assertEquals(true, cap);
     }
     @org.junit.Test(expected = Exception.class)
     public void testInfrequentException() throws Exception {
