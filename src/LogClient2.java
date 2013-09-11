@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class LogClient2 extends LogClient {
     //Message msg;
-    LogClient2(String address, int port, List<String> msgQueue, Message msg, int num){
+    LogClient2(String address, int port, Message msg, List<String> msgQueue, int num){
         super(address, port, msg, msgQueue, num);
         //this.msg = msg;
     }
@@ -51,7 +51,7 @@ public class LogClient2 extends LogClient {
 
         }catch (Exception e){
             this.msgQueue.add(address+": DISCONNECTED ERROR\n" );
-            e.printStackTrace();
+            //e.printStackTrace();
             return;
         }
     }

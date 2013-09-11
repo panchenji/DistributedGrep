@@ -53,7 +53,8 @@ public class LogClient implements Runnable {
             this.msgQueue.add(msgResult.toString());
             }
         }catch (IOException e){
-            e.printStackTrace();
+            this.msgQueue.add(address+": DISCONNECTED ERROR\n");
+            //e.printStackTrace();
             return;
         }
 

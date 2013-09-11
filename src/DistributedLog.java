@@ -19,6 +19,12 @@ public class DistributedLog implements Runnable{
     //     frequent(2);
     //}
     int pattern; //0:infrequent 1:frequent
+    Message msg;
+    HashMap<String, Thread> threadMap;
+    List<String> msgQueue;
+    Thread serverThread;
+    long lastCheckTime;
+
     DistributedLog(int pattern){
        this.pattern = pattern;
     }
@@ -31,16 +37,13 @@ public class DistributedLog implements Runnable{
         }
     }
     public void infrequent() throws Exception{
-        Thread serverThread = new Thread(new LogServer(Config.port, 0));
-        serverThread.start();
-        System.out.println("Log server started");
+        initialize(false);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String cmd;
-        List<String> msgQueue = Collections.synchronizedList(new LinkedList<String>());
         while(true){
             System.out.println("Enter your command: \n");
             cmd = br.readLine();
-            Message msg = new Message("");
+            //Message msg = new Message("");
             MSGHandler.updateMSG(cmd,msg);
             for(String address: Config.ipAddresses){
                 new Thread(new LogClient(address, Config.port, msg , msgQueue,Config.machineNumMap.get(address))).start();
@@ -62,61 +65,86 @@ public class DistributedLog implements Runnable{
         }
     }
     public void frequent() throws Exception{
-        Thread serverThread = new Thread(new LogServer(Config.port, 1));
-        serverThread.start();
-        System.out.println("Log server started");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String cmd;
-        List<String> msgQueue = Collections.synchronizedList(new LinkedList<String>());;
-
-        Message msg = new Message("");
-        HashMap<String, Thread> threadMap = new HashMap<String, Thread>();
-        long lastCheckTime = System.currentTimeMillis();
-
-        System.out.println("Enter press if all the machines are set");
-        cmd = br.readLine();
-        for(String address: Config.ipAddresses){
-            Thread newThread = new Thread(new LogClient2(address, Config.port, msgQueue, msg, Config.machineNumMap.get(address)));
-            threadMap.put(address, newThread);
-            newThread.start();
-
-        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        initialize(false);
         while(true){
 
             System.out.println("Enter your command:");
             cmd = br.readLine();
             //msg.setContent(cmd);
-            MSGHandler.updateMSG(cmd, msg);
-            //System.out.println(msg.valid);
+            notifyMSG(cmd);
+        }
+    }
+    public void notifyMSG(String cmd) throws Exception{
+
+
+
+        MSGHandler.updateMSG(cmd, msg);
+
+
+       if(pattern==1){
             if(System.currentTimeMillis() - lastCheckTime > Config.checkInterval){
                 lastCheckTime = System.currentTimeMillis();
                 for(String address: Config.ipAddresses){
                     if(!threadMap.get(address).isAlive())  {
-                        threadMap.put(address, new Thread(new LogClient2(address, Config.port, msgQueue, msg, Config.machineNumMap.get(address))));
+                        threadMap.put(address, new Thread(new LogClient2(address, Config.port, msg, msgQueue, Config.machineNumMap.get(address))));
                         threadMap.get(address).start();
                     }
                 }
             }
             if(!msg.valid) {
                 System.out.println("Invalid input");
-                continue;
+                return;
             }
             synchronized (msg){
                 msg.notifyAll();
             }
-            int threshold;
-            //System.out.println(msg.commSets.size());
-            if(msg.commSets.size()==0) threshold = Config.ipAddresses.length;
-            else threshold = msg.commSets.size();
-            while(msgQueue.size() < threshold){
-                Thread.sleep(100);
-            }
-            for(String s: msgQueue){
-                System.out.print(s);
-            }
-            msgQueue.clear();
-            msg.clear();
+       }
+        else{
+           for(String address: Config.ipAddresses){
+               new Thread(new LogClient(address, Config.port, msg , msgQueue,Config.machineNumMap.get(address))).start();
+
+           }
+
+       }
+        int threshold;
+        //System.out.println(msg.commSets.size());
+        if(msg.commSets.size()==0) threshold = Config.ipAddresses.length;
+        else threshold = msg.commSets.size();
+        while(msgQueue.size() < threshold){
+            Thread.sleep(100);
+        }
+        for(String s: msgQueue){
+            System.out.print(s);
+        }
+        msgQueue.clear();
+        msg.clear();
+
+    }
+    public void initialize(boolean test) throws Exception{
+        serverThread = new Thread(new LogServer(Config.port, pattern));
+        serverThread.start();
+        System.out.println("Log server started");
+        this.msgQueue = Collections.synchronizedList(new LinkedList<String>());;
+        this.msg = new Message("");
+        if(pattern==0) return;
+
+        this.threadMap = new HashMap<String, Thread>();
+        this.lastCheckTime = System.currentTimeMillis();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        if(!test){
+            String cmd;
+            System.out.println("Enter press if all the machines are set");
+            cmd = br.readLine();
+        }
+
+        for(String address: Config.ipAddresses){
+            Thread newThread = new Thread(new LogClient2(address, Config.port, msg,  msgQueue, Config.machineNumMap.get(address)));
+            threadMap.put(address, newThread);
+            newThread.start();
 
         }
+
     }
 }
