@@ -103,10 +103,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogClientTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LogClientTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LogClientTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="31" selection-start="337" selection-end="337" vertical-scroll-proportion="0.23076923">
+            <state line="30" column="52" selection-start="844" selection-end="844" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -145,10 +145,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Config.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Config.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Config.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="56" selection-start="248" selection-end="262" vertical-scroll-proportion="0.0">
+            <state line="17" column="38" selection-start="589" selection-end="589" vertical-scroll-proportion="0.61538464">
               <folding />
             </state>
           </provider>
@@ -173,13 +173,13 @@
         <option value="$PROJECT_DIR$/DistributedLogTesFre.java" />
         <option value="$PROJECT_DIR$/UnitTest.java" />
         <option value="$PROJECT_DIR$/DistributedLogTest.java" />
-        <option value="$PROJECT_DIR$/Config.java" />
         <option value="$PROJECT_DIR$/DistributedLogTestNotifyMSG.java" />
         <option value="$PROJECT_DIR$/LogClient.java" />
         <option value="$PROJECT_DIR$/LogClient2.java" />
         <option value="$PROJECT_DIR$/LogClient2Test.java" />
         <option value="$PROJECT_DIR$/DistributedLog.java" />
         <option value="$PROJECT_DIR$/LogClientTest.java" />
+        <option value="$PROJECT_DIR$/Config.java" />
       </list>
     </option>
   </component>
@@ -675,13 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="56" selection-start="248" selection-end="262" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DistributedLogTestNotifyMSG.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="17" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0">
@@ -737,10 +730,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LogClientTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="31" selection-start="337" selection-end="337" vertical-scroll-proportion="0.23076923">
+        <state line="30" column="52" selection-start="844" selection-end="844" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="38" selection-start="589" selection-end="589" vertical-scroll-proportion="0.61538464">
+          <folding />
         </state>
       </provider>
     </entry>
